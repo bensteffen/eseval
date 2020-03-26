@@ -51,6 +51,9 @@ var EsprimaEvaluator = (function() {
             case 'Identifier':
                 result = this.evaluateIdentifier(expression);
                 break;
+            case 'ObjectExpression':
+                result = this.evaluateObjectExpression(expression);
+                break;
             case 'MemberExpression':
                 result = this.evaluateMemberExpression(expression);
                 break;
@@ -90,6 +93,17 @@ var EsprimaEvaluator = (function() {
             return this.globalScope[identifier.name];
         }
         return identifier.name;
+    }
+
+    EsprimaEvaluator.prototype.evaluateObjectExpression = function(expression) {
+        var object = {};
+        var self = this;
+        expression.properties.forEach(function(property) {
+            var key = self.evaluate(property.key);
+            var value = self.evaluate(property.value);
+            object[key] = value;
+        });
+        return object;
     }
 
     EsprimaEvaluator.prototype.evaluateMemberExpression = function(expression) {

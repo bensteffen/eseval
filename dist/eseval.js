@@ -6812,7 +6812,7 @@ __webpack_require__.r(__webpack_exports__);
 
 // EXPORTS
 __webpack_require__.d(__webpack_exports__, "esprima", function() { return /* binding */ src_esprima; });
-__webpack_require__.d(__webpack_exports__, "eseval", function() { return /* binding */ eseval; });
+__webpack_require__.d(__webpack_exports__, "evaluator", function() { return /* binding */ evaluator; });
 
 // CONCATENATED MODULE: ./src/esprima-evaluator.js
 var esprima = __webpack_require__(0);
@@ -6831,6 +6831,7 @@ var EsprimaEvaluator = (function() {
 
     EsprimaEvaluator.prototype.setProgram = function(program) {
         this.program = program;
+        this.ast = null;
         return this;
     }
 
@@ -6853,7 +6854,6 @@ var EsprimaEvaluator = (function() {
             if (!(ast.type === 'Program' && ast.body)) {
                 throw('Can only evaluate JS programs with a body.');
             }
-            // console.log(JSON.stringify(ast, null, 2));
             this.ast = ast.body[0];
         }
         return this.evaluate(this.ast);
@@ -6918,9 +6918,10 @@ var EsprimaEvaluator = (function() {
     EsprimaEvaluator.prototype.evaluateArrowFunctionExpression = function(expression) {
         var parameterNames = expression.params.map(function(p) { return p.name });
         var fcnEvaluator = new EsprimaEvaluator().setAst(expression.body);
+        var self = this;
         var callback = function() {
             var thisArguments = arguments;
-            var fcnScope = {};
+            var fcnScope = self.scope;
             parameterNames.forEach(function(name, i) {
                 fcnScope[name] = thisArguments[i];
             });
@@ -6991,7 +6992,7 @@ var src_esprima = __webpack_require__(0);
 
 
 
-var eseval = EsprimaEvaluator;
+var evaluator = EsprimaEvaluator;
 
 
 

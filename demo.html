@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EsEval Demo</title>
+
+    <script src="dist/eseval.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            max-width: 1000px;
+            min-width: 320px;
+            width: 50vw;
+            margin: auto;
+        }
+        #container {
+            padding: 1em;
+            background-color: lightsteelblue;
+        }
+        textarea, input, #resultContainer {
+            width: 100%;
+            font-family: monospace;
+        }
+        textarea {
+            height: 150px;
+        }
+        #resultContainer {
+            height: 3em;
+            text-align: center;
+            font-size: 2em;
+        }
+    </style>
+</head>
+<body>
+    <h1>EsEval Demo</h1>
+    <div id="container">
+        <div>
+            <h5>Program</h5>
+            <input id="programInput" value='a.map((x,i) => x*i + b).join("; ")'></input>
+        </div>
+        <div>
+            <h5>Scope (JSON)</h5>
+            <textarea id="scopeInput">{"a": [1,2,3], "b": 2}</textarea>
+        </div>
+        <div>
+            <button id="startButton">EVALUATE</button>
+        </div>
+        <h5>Result</h5>
+        <div id="resultContainer">
+            <span id="resultDisplay"></span>
+        </div>
+    </div>
+
+    <script>
+        let evaluator = new EsEval.evaluator();
+
+        let programInput  = document.querySelector('#programInput' );
+        let scopeInput    = document.querySelector('#scopeInput'   );
+        let resultDisplay = document.querySelector('#resultDisplay');
+        let startButton   = document.querySelector('#startButton'  );
+        startButton.onclick = function() {
+            let program = programInput.value;
+            evaluator.setProgram(program);
+
+            let scopeString = scopeInput.value;
+            if (scopeString) {
+                let scope = JSON.parse(scopeString);
+                evaluator.setScope(scope);
+            }
+
+            let result = evaluator.start();
+            resultDisplay.innerHTML = JSON.stringify(result);
+        }
+
+    </script>
+</body>
+</html>

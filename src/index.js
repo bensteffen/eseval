@@ -2,9 +2,9 @@ var esprima = require('esprima');
 
 import * as EsprimaEvaluator from './esprima-evaluator';
 
-var eseval = EsprimaEvaluator.EsprimaEvaluator;
+var evaluator = EsprimaEvaluator.EsprimaEvaluator;
 
 export {
     esprima,
-    eseval
+    evaluator
 };

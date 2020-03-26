@@ -1,5 +1,5 @@
 
-Run single lines of Javascript in a save environment. Use [esprima](https://github.com/jquery/esprima) to generate the abstract syntax tree (AST) from a given code string.
+Run single lines of Javascript in a save environment. Uses [esprima](https://github.com/jquery/esprima) to generate the abstract syntax tree (AST) from a given code string.
 
 ## API
 

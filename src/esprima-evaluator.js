@@ -101,9 +101,10 @@ var EsprimaEvaluator = (function() {
     EsprimaEvaluator.prototype.evaluateArrowFunctionExpression = function(expression) {
         var parameterNames = expression.params.map(function(p) { return p.name });
         var fcnEvaluator = new EsprimaEvaluator().setAst(expression.body);
+        var self = this;
         var callback = function() {
             var thisArguments = arguments;
-            var fcnScope = {};
+            var fcnScope = self.scope;
             parameterNames.forEach(function(name, i) {
                 fcnScope[name] = thisArguments[i];
             });

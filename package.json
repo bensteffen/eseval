@@ -1,0 +1,19 @@
+{
+  "name": "eseval",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npx webpack"
+  },
+  "author": "Florian Haeussinger",
+  "license": "MIT",
+  "dependencies": {
+    "esprima": "^4.0.1"
+  },
+  "devDependencies": {
+    "webpack": "^4.41.6",
+    "webpack-cli": "^3.3.11"
+  }
+}

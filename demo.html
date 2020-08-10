@@ -39,11 +39,11 @@
     <div id="container">
         <div>
             <h5>Program</h5>
-            <input id="programInput" value='a.map((x,i) => x*i + b).join("; ")'></input>
+            <input id="programInput" value=''></input>
         </div>
         <div>
             <h5>Scope (JSON)</h5>
-            <textarea id="scopeInput">{"a": [1,2,3], "b": 2}</textarea>
+            <textarea id="scopeInput"></textarea>
         </div>
         <div>
             <button id="startButton">EVALUATE</button>
@@ -61,11 +61,21 @@
         let scopeInput    = document.querySelector('#scopeInput'   );
         let resultDisplay = document.querySelector('#resultDisplay');
         let startButton   = document.querySelector('#startButton'  );
+
+        let program = localStorage.getItem('eseval-demo-program') || 'a.map((x,i) => x*i + b).join("; ")';
+        programInput.value = program
+
+        let scopeString = localStorage.getItem('eseval-demo-scope');
+        scopeInput.innerHTML = scopeString || '{"a": [1,2,3], "b": 2}'
+
         startButton.onclick = function() {
-            let program = programInput.value;
+
+            program = programInput.value;
+            localStorage.setItem('eseval-demo-program', program) 
             evaluator.setProgram(program);
 
-            let scopeString = scopeInput.value;
+            scopeString = scopeInput.value;
+            localStorage.setItem('eseval-demo-scope', scopeString)
             if (scopeString) {
                 let scope = JSON.parse(scopeString);
                 evaluator.setScope(scope);

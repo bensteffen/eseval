@@ -6883,6 +6883,9 @@ var EsprimaEvaluator = (function() {
             case 'NewExpression':
                 result = this.evaluateNewExpression(expression);
                 break;
+            case 'UnaryExpression':
+                result = this.evaluateUnaryExpression(expression);
+                break;
             case 'BinaryExpression':
                 result = this.evaluateBinaryExpression(expression);
                 break;
@@ -6969,6 +6972,16 @@ var EsprimaEvaluator = (function() {
 
     EsprimaEvaluator.prototype.evaluateExpressionStatement = function(stmt) {
         return stmt.expression;
+    }
+
+    EsprimaEvaluator.prototype.evaluateUnaryExpression = function(expression) {
+        var argument = this.evaluate(expression.argument);
+        switch (expression.operator) {
+            case '+'     : return +argument;
+            case '-'     : return -argument;
+            case '!'     : return !argument;
+            case 'typeof': return typeof argument
+        }
     }
 
     EsprimaEvaluator.prototype.evaluateBinaryExpression = function(expression) {

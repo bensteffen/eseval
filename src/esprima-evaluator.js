@@ -43,6 +43,9 @@ var EsprimaEvaluator = (function() {
     }
 
     EsprimaEvaluator.prototype.evaluate = function(expression) {
+        if (expression === null || expression === undefined) {
+            return expression;
+        }
         var result;
         switch (expression.type) {
             case 'Literal':

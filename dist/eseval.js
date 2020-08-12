@@ -6898,6 +6898,9 @@ var EsprimaEvaluator = (function() {
             case 'ExpressionStatement':
                 result = this.evaluateExpressionStatement(expression);
                 break;
+            case 'ConditionalExpression':
+                result = this.evaluateConditionalExpression(expression);
+                break;
             default:
                 return expression;
         }
@@ -7014,6 +7017,15 @@ var EsprimaEvaluator = (function() {
         switch (expression.operator) {
             case '&&'  : return left && right;
             case '||'  : return left || right;
+        }
+    }
+
+    EsprimaEvaluator.prototype.evaluateConditionalExpression = function(expression) {
+        var test = this.evaluate(expression.test);
+        if (test) {
+            return this.evaluate(expression.consequent);
+        } else {
+            return this.evaluate(expression.alternate);
         }
     }
 

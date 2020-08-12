@@ -163,7 +163,8 @@ var EsprimaEvaluator = (function() {
             case '+'     : return +argument;
             case '-'     : return -argument;
             case '!'     : return !argument;
-            case 'typeof': return typeof argument
+            case 'typeof': return typeof argument;
+            default: throw(Error('Operator ' + expression.operator + ' not supported.'))
         }
     }
 
@@ -176,11 +177,14 @@ var EsprimaEvaluator = (function() {
             case '*'  : return left  *  right;
             case '/'  : return left  /  right;
             case '==' : return left  == right;
+            case '!=' : return left  != right;
             case '===': return left === right;
+            case '!==': return left !== right;
             case '>'  : return left  >  right;
             case '>=' : return left  >= right;
             case '<'  : return left  <  right;
             case '<=' : return left  <= right;
+            default: throw(Error('Operator ' + expression.operator + ' not supported.'))
         }
     }
 

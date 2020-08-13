@@ -130,7 +130,12 @@ var EsprimaEvaluator = (function() {
 
     EsprimaEvaluator.prototype.evaluateMemberExpression = function(expression) {
         var object = this.evaluate(expression.object);
-        var property = this.evaluate(expression.property);
+        var property;
+        if (expression.property.type === 'Identifier') {
+            property = expression.property.name;
+        } else {
+            property = this.evaluate(expression.property);
+        }
         return object[property];
     }
 
